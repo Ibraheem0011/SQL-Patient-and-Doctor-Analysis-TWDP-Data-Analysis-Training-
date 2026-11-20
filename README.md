@@ -23,44 +23,6 @@ Two dummy tables provided for the training:
 | **Task 5: Joining patients and doctors** (4 questions) | Combining tables to answer questions | `INNER JOIN`, table aliases, `AVG` by doctor, `TOP 1 WITH TIES` |
 | **Task 6: Verify table structures** | Inspecting column names and data types | `sp_help` |
 
-## Example Queries
-
-**Average length of stay by admission type, keeping only those above 4 days**
-
-```sql
-SELECT Admission_Type,
-       AVG(Length_of_Stay) AS Average_Length_Of_Stay
-FROM Patients
-GROUP BY Admission_Type
-HAVING AVG(Length_of_Stay) > 4;
-```
-
-**Classify patients into age groups**
-
-```sql
-SELECT Patient_ID, Patient_Name, Age,
-       CASE
-           WHEN Age < 40 THEN 'Young'
-           WHEN Age BETWEEN 40 AND 59 THEN 'Middle-aged'
-           WHEN Age >= 60 THEN 'Elders'
-           ELSE 'Unknown'
-       END AS Age_Group
-FROM Patients;
-```
-
-**Doctor(s) who treated the most patients (handles ties)**
-
-```sql
-SELECT TOP 1 WITH TIES
-       d.Doctor_ID, d.Doctor_Name, d.Specialization,
-       COUNT(*) AS Total_Patients
-FROM dbo.Patients AS p
-INNER JOIN dbo.Doctors AS d
-    ON p.Doctor_ID = d.Doctor_ID
-GROUP BY d.Doctor_ID, d.Doctor_Name, d.Specialization
-ORDER BY COUNT(*) DESC;
-```
-
 ## Repository Structure
 
 ```
@@ -79,4 +41,4 @@ ORDER BY COUNT(*) DESC;
 ## Author
 
 **Ibraheem Tunde Lawal**
-Microbiology graduate and aspiring data analyst, Kwara State University
+Microbiology graduate and data analyst, Kwara State University
